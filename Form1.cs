@@ -15,6 +15,9 @@ namespace pryJuego
     {
         //Declaracion de variables globales
         clsNave objNaveJugador;
+        clsNave objEnemigo;
+        Random posX = new Random();
+        Random posY = new Random();
 
         public Form1()
         {
@@ -27,10 +30,31 @@ namespace pryJuego
 
             objNaveJugador.crearJugador();
 
-            objNaveJugador.imgNave.Location = new Point(200,200) ;
+            objNaveJugador.imgNave.Location = new Point(350,600);
+            
             
             Controls.Add(objNaveJugador.imgNave);
             //MessageBox.Show(objNaveJugador.nombre);
+
+            
+            int contador = 0;
+            while (contador < 5)
+            {
+                objEnemigo = new clsNave();
+
+                objEnemigo.crearEnemigo();
+                
+                int valorX = posX.Next(0, 400);
+                int valorY = posY.Next(0, 400);
+
+                objEnemigo.imgNave.Location = new Point(valorX, valorY);
+                Controls.Add(objEnemigo.imgNave);
+
+                contador++;
+            }
+            
+
+
 
 
         }
@@ -49,6 +73,20 @@ namespace pryJuego
                 objNaveJugador.imgNave.Location = new Point(
                     objNaveJugador.imgNave.Location.X - 5,
                     objNaveJugador.imgNave.Location.Y);
+            }
+
+            if (e.KeyCode == Keys.Up)
+            {
+                objNaveJugador.imgNave.Location = new Point(
+                    objNaveJugador.imgNave.Location.X ,
+                    objNaveJugador.imgNave.Location.Y - 5);
+            }
+
+            if (e.KeyCode == Keys.Down)
+            {
+                objNaveJugador.imgNave.Location = new Point(
+                    objNaveJugador.imgNave.Location.X ,
+                    objNaveJugador.imgNave.Location.Y + 5);
             }
         }
     }
