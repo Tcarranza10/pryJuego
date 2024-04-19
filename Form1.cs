@@ -80,9 +80,12 @@ namespace pryJuego
             // Detener el temporizador de cadencia
             cadenciaDisparoTimer.Stop();
         }
+
         private void EnemigoTimer_Tick(object sender, EventArgs e)
         {
-            // Verificar colisión con el jugador
+            List<clsEnemigo> enemigosAEliminar = new List<clsEnemigo>();
+
+            // Verificar colisión con el jugador y mover los enemigos
             foreach (clsEnemigo enemigo in enemigos)
             {
                 if (objNaveJugador.imgNave.Bounds.IntersectsWith(enemigo.imgNave.Bounds))
@@ -98,37 +101,78 @@ namespace pryJuego
                     Application.Exit();
                     return; // Salir del método para evitar continuar moviendo enemigos
                 }
+
+                // Mover cada enemigo hacia abajo
+                enemigo.imgNave.Top += 10;
+
+                // Verificar si el enemigo está fuera de la pantalla
+                if (enemigo.imgNave.Top > ClientSize.Height)
+                {
+                    // Agregar a la lista de enemigos a eliminar
+                    enemigosAEliminar.Add(enemigo);
+                }
             }
 
-            // Crear un nuevo enemigo
-            clsEnemigo nuevoEnemigo = new clsEnemigo();
-            PictureBox imgEnemigo = nuevoEnemigo.CrearEnemigo();
-
-            // Asignar el PictureBox creado a la propiedad imgNave del nuevo enemigo
-            nuevoEnemigo.imgNave = imgEnemigo;
-            imgEnemigo.Location = new Point(posX.Next(0, ClientSize.Width), 0);
-            Controls.Add(imgEnemigo);
-            enemigos.Add(nuevoEnemigo);
-
-            // Verificar si la posición generada aleatoriamente está ocupada por otro enemigo
-            bool posicionValida;
-            Point nuevaPosicion;
-            do
+            // Eliminar enemigos que están fuera de la pantalla
+            foreach (clsEnemigo enemigoAEliminar in enemigosAEliminar)
             {
-                nuevaPosicion = new Point(posX.Next(0, ClientSize.Width), 0);
-                posicionValida = !enemigos.Any(enemigo => enemigo.imgNave.Bounds.IntersectsWith(new Rectangle(nuevaPosicion, nuevoEnemigo.imgNave.Size)));
-            } while (!posicionValida);
+                Controls.Remove(enemigoAEliminar.imgNave);
+                enemigos.Remove(enemigoAEliminar);
+            }
 
-            imgEnemigo.Location = nuevaPosicion;
-            Controls.Add(imgEnemigo);
-            enemigos.Add(nuevoEnemigo);
-
-            // Mover todos los enemigos hacia abajo
-            foreach (clsEnemigo enemigo in enemigos)
+            // Verificar si necesitamos generar nuevos enemigos
+            if (enemigos.Count <5) // Puedes ajustar este número según sea necesario
             {
-                enemigo.imgNave.Top += 5;
+                // Crear un nuevo enemigo dentro de los límites del formulario
+                clsEnemigo nuevoEnemigo = new clsEnemigo();
+                PictureBox imgEnemigo = nuevoEnemigo.CrearEnemigo();
+
+                // Generar una posición aleatoria dentro de los límites del formulario
+                Random rnd = new Random();
+                int minX = 0;
+                int minY = 0;
+                int maxX = ClientSize.Width - imgEnemigo.Width;
+                int maxY = ClientSize.Height - imgEnemigo.Height;
+
+                bool posicionValida = false;
+                int intentos = 0;
+                while (!posicionValida && intentos < 50) // Intentar hasta 50 veces
+                {
+                    // Generar coordenadas aleatorias
+                    int posX = rnd.Next(minX, maxX);
+                    int posY = rnd.Next(minY, maxY);
+
+                    // Verificar la distancia mínima con otros enemigos
+                    // y con el jugador
+                    bool distanciaAceptable = true;
+                    foreach (clsEnemigo otroEnemigo in enemigos)
+                    {
+                        if (Math.Abs(posX - otroEnemigo.imgNave.Location.X) < 95 &&
+                            Math.Abs(posY - otroEnemigo.imgNave.Location.Y) < 95)
+                        {
+                            distanciaAceptable = false;
+                            break;
+                        }
+                    }
+
+                    if (distanciaAceptable)
+                    {
+                        // Verificar la distancia con el jugador
+                        if (Math.Abs(posX - objNaveJugador.imgNave.Location.X) >= 90 ||
+                            Math.Abs(posY - objNaveJugador.imgNave.Location.Y) >= 90)
+                        {
+                            imgEnemigo.Location = new Point(posX, posY);
+                            Controls.Add(imgEnemigo);
+                            enemigos.Add(nuevoEnemigo);
+                            posicionValida = true;
+                        }
+                    }
+
+                    intentos++; // Incrementar el contador de intentos
+                }
             }
         }
+
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
