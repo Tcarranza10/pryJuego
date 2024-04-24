@@ -28,7 +28,7 @@ namespace pryJuego
             puntosDaño = 1;
             imgNave = new PictureBox();
             imgNave.SizeMode = PictureBoxSizeMode.StretchImage;
-            imgNave.ImageLocation = System.IO.Path.Combine(Application.StartupPath, "imagenes", "SpaceShip.png");
+            imgNave.ImageLocation = "C:\\Users\\Usuario\\Source\\Repos\\pryJuego\\imagenes\\SpaceShip.png";
         }
 
 
