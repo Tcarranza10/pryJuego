@@ -121,7 +121,7 @@ namespace pryJuego
             }
 
             // Verificar si necesitamos generar nuevos enemigos
-            if (enemigos.Count <5) // Puedes ajustar este número según sea necesario
+            if (enemigos.Count <6) // Puedes ajustar este número según sea necesario
             {
                 // Crear un nuevo enemigo dentro de los límites del formulario
                 clsEnemigo nuevoEnemigo = new clsEnemigo();
@@ -136,7 +136,7 @@ namespace pryJuego
 
                 bool posicionValida = false;
                 int intentos = 0;
-                while (!posicionValida && intentos < 50) // Intentar hasta 50 veces
+                while (!posicionValida && intentos < 60) // Intentar hasta 60 veces
                 {
                     // Generar coordenadas aleatorias
                     int posX = rnd.Next(minX, maxX);
@@ -147,8 +147,8 @@ namespace pryJuego
                     bool distanciaAceptable = true;
                     foreach (clsEnemigo otroEnemigo in enemigos)
                     {
-                        if (Math.Abs(posX - otroEnemigo.imgNave.Location.X) < 95 &&
-                            Math.Abs(posY - otroEnemigo.imgNave.Location.Y) < 95)
+                        if (Math.Abs(posX - otroEnemigo.imgNave.Location.X) < 140 &&
+                            Math.Abs(posY - otroEnemigo.imgNave.Location.Y) < 140)
                         {
                             distanciaAceptable = false;
                             break;
@@ -158,8 +158,8 @@ namespace pryJuego
                     if (distanciaAceptable)
                     {
                         // Verificar la distancia con el jugador
-                        if (Math.Abs(posX - objNaveJugador.imgNave.Location.X) >= 90 ||
-                            Math.Abs(posY - objNaveJugador.imgNave.Location.Y) >= 90)
+                        if (Math.Abs(posX - objNaveJugador.imgNave.Location.X) >= 80 ||
+                            Math.Abs(posY - objNaveJugador.imgNave.Location.Y) >= 80)
                         {
                             imgEnemigo.Location = new Point(posX, posY);
                             Controls.Add(imgEnemigo);
