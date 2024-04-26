@@ -26,7 +26,7 @@ namespace pryJuego
         Random posY = new Random();
         Timer movimientoDisparosTimer = new Timer();
         private Timer cadenciaDisparoTimer = new Timer();
-        private bool puedeDisparar = true; // Bandera para controlar la cadencia de disparo
+        private bool puedeDisparar = true;
 
 
         public Form1()
@@ -41,7 +41,7 @@ namespace pryJuego
 
             objNaveJugador.crearJugador();
 
-            objNaveJugador.imgNave.Location = new Point(350, 600);
+            objNaveJugador.imgNave.Location = new Point(350, 650);
 
             Controls.Add(objNaveJugador.imgNave);
 
@@ -51,11 +51,11 @@ namespace pryJuego
             enemigoTimer.Start();
 
             //Crear enemigos
-            for (int contador = 0; contador < 5; contador++)
+            for (int contador = 0; contador < 6; contador++)
             {
                 objEnemigo = new clsEnemigo();
                 PictureBox imgEnemigo = objEnemigo.CrearEnemigo();
-                imgEnemigo.Location = new Point(posX.Next(0, ClientSize.Width), posY.Next(0, ClientSize.Height));
+                imgEnemigo.Location = new Point(posX.Next(0, 700), posY.Next(0, 580));
                 Controls.Add(imgEnemigo);
                 enemigos.Add(objEnemigo);
             }
@@ -121,7 +121,7 @@ namespace pryJuego
             }
 
             // Verificar si necesitamos generar nuevos enemigos
-            if (enemigos.Count <6) // Puedes ajustar este número según sea necesario
+            if (enemigos.Count <6) 
             {
                 // Crear un nuevo enemigo dentro de los límites del formulario
                 clsEnemigo nuevoEnemigo = new clsEnemigo();
@@ -131,8 +131,8 @@ namespace pryJuego
                 Random rnd = new Random();
                 int minX = 0;
                 int minY = 0;
-                int maxX = ClientSize.Width - imgEnemigo.Width;
-                int maxY = ClientSize.Height - imgEnemigo.Height;
+                int maxX = 600 - imgEnemigo.Width;
+                int maxY = 580 - imgEnemigo.Height;
 
                 bool posicionValida = false;
                 int intentos = 0;
