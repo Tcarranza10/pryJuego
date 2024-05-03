@@ -28,7 +28,7 @@ namespace pryJuego
            
             vida = 100;
             nombre = "jugador1";
-            puntosDaño = 1;
+            puntosDaño = 5;
             imgNave = new PictureBox();
             imgNave.SizeMode = PictureBoxSizeMode.StretchImage;
             imgNave.Image = Properties.Resources.SpaceShip;

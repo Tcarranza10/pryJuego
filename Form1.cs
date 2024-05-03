@@ -26,9 +26,10 @@ namespace pryJuego
         Random posY = new Random();
         Timer movimientoDisparosTimer = new Timer();
         private Timer cadenciaDisparoTimer = new Timer();
-        private bool puedeDisparar = true;
+        bool puedeDisparar = true;
         public int puntos = 0;
-
+        private DateTime Disparo;
+        double cd = 0.5;
 
         public Form1()
         {
@@ -70,21 +71,10 @@ namespace pryJuego
             movimientoDisparosTimer.Start();
 
 
-            // Configurar temporizador de cadencia de disparo
-            cadenciaDisparoTimer.Interval = 15200;
-            cadenciaDisparoTimer.Tick += CadenciaDisparoTimer_Tick;
-            cadenciaDisparoTimer.Start();
 
         }
 
-        private void CadenciaDisparoTimer_Tick(object sender, EventArgs e)
-        {
-            // Restablecer la capacidad de disparo
-            puedeDisparar = true;
-            // Detener el temporizador de cadencia
-            cadenciaDisparoTimer.Stop();
-        }
-
+       
 
         private List<clsEnemigo> enemigosAEliminar = new List<clsEnemigo>();
         private void EnemigoTimer_Tick(object sender, EventArgs e)
@@ -219,9 +209,9 @@ namespace pryJuego
             {
                 Disparar();
                 // Desactivar la capacidad de disparo
-                puedeDisparar = false;
-                // Reiniciar temporizador de cadencia
-                cadenciaDisparoTimer.Start();
+                puedeDisparar = true;
+                
+                
             }
         }
 
@@ -297,24 +287,37 @@ namespace pryJuego
 
         private void Disparar()
         {
-            // Crear un nuevo disparo
-            PictureBox disparo = new PictureBox();
-            // Tamaño del disparo
-            disparo.Size = new Size(5, 10);
-            // Color del disparo
-            disparo.BackColor = Color.Yellow;
-            disparo.Location = new Point(
-                // Centrar el disparo horizontalmente
-                objNaveJugador.imgNave.Location.X + objNaveJugador.imgNave.Width / 2 - disparo.Width / 2,
-                // Colocar el disparo encima del jugador
-                objNaveJugador.imgNave.Location.Y - disparo.Height);
-            Controls.Add(disparo);
-            disparos.Add(disparo);
+            if((DateTime.Now - Disparo).TotalSeconds >= cd)
+            {
+                // Crear un nuevo disparo
+                PictureBox disparo = new PictureBox();
+                // Tamaño del disparo
+                disparo.Size = new Size(5, 10);
+                // Color del disparo
+                disparo.BackColor = Color.Yellow;
+                disparo.Location = new Point(
+                    // Centrar el disparo horizontalmente
+                    objNaveJugador.imgNave.Location.X + objNaveJugador.imgNave.Width / 2 - disparo.Width / 2,
+                    // Colocar el disparo encima del jugador
+                    objNaveJugador.imgNave.Location.Y - disparo.Height);
+                Controls.Add(disparo);
+                disparos.Add(disparo);
+                Disparo = DateTime.Now;
+            }
+           
         }
 
         private void lblPuntuacion_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Space)
+            {
+                puedeDisparar = false;
+            }
         }
     }
 }
