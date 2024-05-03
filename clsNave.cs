@@ -14,7 +14,9 @@ namespace pryJuego
         public string nombre;
         public int puntosDaño;
         public PictureBox imgNave;
-        Random aleatorioEnemigo = new Random();
+
+
+
 
         public clsNave()
         {
@@ -23,12 +25,13 @@ namespace pryJuego
 
         public void crearJugador()
         {
+           
             vida = 100;
             nombre = "jugador1";
             puntosDaño = 1;
             imgNave = new PictureBox();
             imgNave.SizeMode = PictureBoxSizeMode.StretchImage;
-            imgNave.ImageLocation = "C:\\Users\\Alumno\\Source\\Repos\\pryJuego\\imagenes\\SpaceShip.png";
+            imgNave.Image = Properties.Resources.SpaceShip;
         }
 
 

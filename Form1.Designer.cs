@@ -28,7 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.lblPuntuacion = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // lblPuntuacion
+            // 
+            this.lblPuntuacion.AutoSize = true;
+            this.lblPuntuacion.Location = new System.Drawing.Point(761, 678);
+            this.lblPuntuacion.Name = "lblPuntuacion";
+            this.lblPuntuacion.Size = new System.Drawing.Size(64, 13);
+            this.lblPuntuacion.TabIndex = 0;
+            this.lblPuntuacion.Text = "Puntuación:";
+            this.lblPuntuacion.Click += new System.EventHandler(this.lblPuntuacion_Click);
             // 
             // Form1
             // 
@@ -36,6 +47,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(850, 700);
+            this.Controls.Add(this.lblPuntuacion);
+            this.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -43,10 +56,13 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Label lblPuntuacion;
     }
 }
 

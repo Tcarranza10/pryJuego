@@ -27,6 +27,7 @@ namespace pryJuego
         Timer movimientoDisparosTimer = new Timer();
         private Timer cadenciaDisparoTimer = new Timer();
         private bool puedeDisparar = true;
+        public int puntos = 0;
 
 
         public Form1()
@@ -36,6 +37,8 @@ namespace pryJuego
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
+
             //Crear jugador
             objNaveJugador = new clsNave();
 
@@ -44,6 +47,7 @@ namespace pryJuego
             objNaveJugador.imgNave.Location = new Point(350, 650);
 
             Controls.Add(objNaveJugador.imgNave);
+            
 
             Timer enemigoTimer = new Timer();
             enemigoTimer.Interval = 1200; // Intervalo en milisegundos (1 segundo)
@@ -81,9 +85,11 @@ namespace pryJuego
             cadenciaDisparoTimer.Stop();
         }
 
+
+        private List<clsEnemigo> enemigosAEliminar = new List<clsEnemigo>();
         private void EnemigoTimer_Tick(object sender, EventArgs e)
         {
-            List<clsEnemigo> enemigosAEliminar = new List<clsEnemigo>();
+           
 
             // Verificar colisión con el jugador y mover los enemigos
             foreach (clsEnemigo enemigo in enemigos)
@@ -120,8 +126,10 @@ namespace pryJuego
                 enemigos.Remove(enemigoAEliminar);
             }
 
+           
+
             // Verificar si necesitamos generar nuevos enemigos
-            if (enemigos.Count <6) 
+            if (enemigos.Count < 6)
             {
                 // Crear un nuevo enemigo dentro de los límites del formulario
                 clsEnemigo nuevoEnemigo = new clsEnemigo();
@@ -171,7 +179,20 @@ namespace pryJuego
                     intentos++; // Incrementar el contador de intentos
                 }
             }
+
+            // Actualizar la puntuación después de eliminar enemigos
+            
         }
+
+        // Método para actualizar la puntuación en el formulario
+        private void ActualizarPuntuacion()
+        {
+            // Actualizar la puntuación en el label
+            lblPuntuacion.Text = "Puntuación: " + puntos.ToString();
+        }
+
+
+
 
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -265,6 +286,8 @@ namespace pryJuego
                             // Si la vida del enemigo llega a cero o menos, eliminarlo
                             Controls.Remove(enemigo.imgNave);
                             enemigos.Remove(enemigo);
+                            puntos += 10; // Suponiendo que el jugador obtiene 10 puntos por cada enemigo destruido
+                            ActualizarPuntuacion();
                         }
                         break; // Salir del bucle interno una vez que se haya procesado una colisión
                     }
@@ -287,6 +310,11 @@ namespace pryJuego
                 objNaveJugador.imgNave.Location.Y - disparo.Height);
             Controls.Add(disparo);
             disparos.Add(disparo);
+        }
+
+        private void lblPuntuacion_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

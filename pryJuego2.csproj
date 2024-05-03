@@ -94,5 +94,15 @@
   <ItemGroup>
     <None Include="imagenes\fondo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="imagenes\Enemigo1.png" />
+    <Content Include="imagenes\Enemigo2.png" />
+    <Content Include="imagenes\Enemigo3.png" />
+    <Content Include="imagenes\SpaceShip.png" />
+    <None Include="Resources\SpaceShip.png" />
+    <None Include="Resources\Enemigo3.png" />
+    <None Include="Resources\Enemigo2.png" />
+    <None Include="Resources\Enemigo1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

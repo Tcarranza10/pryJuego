@@ -28,21 +28,21 @@ namespace pryJuego
                     vida = 25;
                     nombre = "enemigo1";
                     puntosDaño = 2;
-                    imgNave.ImageLocation = "C:\\Users\\Alumno\\Source\\Repos\\pryJuego\\imagenes\\Enemigo1.png";
+                    imgNave.Image = Properties.Resources.Enemigo1;
                     break;
 
                 case 1:
                     vida = 20;
                     nombre = "enemigo2";
                     puntosDaño = 2;
-                    imgNave.ImageLocation = "C:\\Users\\Alumno\\Source\\Repos\\pryJuego\\imagenes\\Enemigo2.png";
+                    imgNave.Image = Properties.Resources.Enemigo2;
                     break;
 
                 case 2:
                     vida = 20;
                     nombre = "enemigo3";
                     puntosDaño = 2;
-                    imgNave.ImageLocation = "C:\\Users\\Alumno\\Source\\Repos\\pryJuego\\imagenes\\Enemigo3.png";
+                    imgNave.Image = Properties.Resources.Enemigo3;
                     break;
 
             }
