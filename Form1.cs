@@ -91,10 +91,10 @@ namespace pryJuego
                     ((Timer)sender).Stop(); // Detener el temporizador de enemigos
 
                     // Mostrar mensaje de fin de juego
-                    MessageBox.Show("¡Game Over!", "Fin del Juego", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"¡Game Over!\nPuntuación: {puntos}", "Fin del Juego", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Terminar la aplicación
-                    Application.Exit();
+                    // Cerrar el formulario
+                    this.Close();
                     return; // Salir del método para evitar continuar moviendo enemigos
                 }
 
